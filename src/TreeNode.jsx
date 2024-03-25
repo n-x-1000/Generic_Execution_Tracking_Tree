@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Tree.css";
-import Arrow, { DIRECTION } from "react-arrows";
+import Arrow, { DIRECTION, HEAD } from "react-arrows";
 import Popover from "react-popover";
 import Chart from "chart.js/auto";
 
@@ -9,55 +9,58 @@ function TreeNode({ node, onClick }) {
     const nodeRef = useRef(null);
     const nodeId = `tree-node-${node.name}`;
     const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-    const [chartInstance, setChartInstance] = useState(null);
+    const [chart, setChart] = useState(null)
 
     const handleClick = () => {
         setIsOpen(!isOpen);
         onClick(node, !isOpen);
     };
 
-    const handlePopoverToggle = () => {
-        setIsPopoverOpen(!isPopoverOpen);
-    };
-
     useEffect(() => {
-        if (isOpen) {
-            if (!chartInstance) {
-                const ctx = document.getElementById(`chart-${nodeId}`).getContext("2d");
-                const newChartInstance = new Chart(ctx, {
-                    type: "bar",
-                    data: {
-                        labels: ["Positive", "Negative", "Comments"],
-                        datasets: [
-                            {
-                                label: "value",
-                                backgroundColor: "rgb(54, 162, 235)",
-                                data: [20, 30, 45],
-                            },
-                        ],
-                    },
-                    options: {
-                        indexAxis: "y",
-                    },
-                });
-                setChartInstance(newChartInstance);
-            }
+        if (isPopoverOpen) {
+            const ctx = document.getElementById(`chart-${nodeId}`).getContext("2d");
+            const newChartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["Positive", "Negative", "Comments"],
+                    datasets: [
+                        {
+                            label: "value",
+                            backgroundColor: "rgb(54, 162, 235)",
+                            data: [20, 30, 45],
+                        },
+                    ],
+                },
+                options: {
+                    indexAxis: "y",
+                },
+            });
+            newChartInstance.render()
+            setChart(newChartInstance);
         } else {
-            if (chartInstance) {
-                chartInstance.destroy();
-                setChartInstance(null);
+            if (chart) {
+                chart.destroy();
+                setChart(null);
             }
         }
-    }, [isOpen, nodeId]);
+    }, [isPopoverOpen])
+
+    const handlePopoverOpen = () => {
+        setIsPopoverOpen(true); 
+    };
+
+    const handlePopoverClose = () => {
+        setIsPopoverOpen(false);
+    };
 
     return (
         <div className={`tree-node tree-node-${node.name}`} ref={nodeRef}>
             <Popover
                 isOpen={isPopoverOpen}
-                preferPlace="above"
                 body={
                     <canvas
                         id={`chart-${nodeId}`}
+                        className="chart"
                         style={{
                             width: "300px",
                             height: "200px",
@@ -66,14 +69,13 @@ function TreeNode({ node, onClick }) {
                         }}
                     ></canvas>
                 }
-                onOuterAction={() => setIsPopoverOpen(false)}
             >
                 <button
                     id={nodeId}
                     className={`tree-node-button tree-node-button-${node.name}`}
                     onClick={handleClick}
-                    onMouseEnter={handlePopoverToggle}
-                    onMouseLeave={handlePopoverToggle}
+                    onMouseEnter={handlePopoverOpen}
+                    onMouseLeave={handlePopoverClose}
                 >
                     {node.name}
                 </button>
@@ -103,6 +105,7 @@ function TreeNode({ node, onClick }) {
                                 translation: [0, 0],
                             }}
                             className="arrow"
+                            head={HEAD.NONE}
                         />
                     ))}
                 </div>

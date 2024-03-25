@@ -97,6 +97,6 @@
   stroke: #000;
   stroke-width: 1px;
 }
-.myChart{
-  width: 10vw;
+.chart{
+  background-color: beige;
 }
