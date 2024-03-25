@@ -1,0 +1,99 @@
+.tree-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.tree-node {
+  display: flex;
+  flex-direction: row; /* Change to row */
+  align-items: center;
+  justify-content: flex-start; /* Distribute children evenly */
+  margin-right: 20px;
+  margin-bottom: 20px; /* Add margin to each tree node */
+  
+}
+
+.tree-node-button {
+  background-color: #1e90ff; 
+  color: #fff; 
+  border: none;
+  padding: 10px 20px; 
+  font-size: 16px; 
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.tree-node-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Adding shadow on hover */
+  outline: none; /* Removing outline on focus */
+}
+
+.tree-node-children {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch; /* Ensure children fill the container vertically */
+  max-height: 200px; /* Set a fixed height for the container */
+  overflow-y: auto; /* Add vertical scroll if needed */
+}
+
+.tree-node-child {
+  margin-bottom: 10px; /* Adjust vertical spacing between child nodes */
+}
+
+/* Style for 'Research' nodes and their button */
+.tree-node-Research .tree-node-button,
+.tree-node-Research .tree-node-button:hover,
+.tree-node-Research .tree-node-button:focus {
+  background-color: #2a4494;
+  color: white;
+}
+
+/* Style for 'Planning' nodes and their button */
+.tree-node-Planning .tree-node-button,
+.tree-node-Planning .tree-node-button:hover,
+.tree-node-Planning .tree-node-button:focus {
+  background-color: #82b3e8;
+  color: black;
+}
+
+/* Style for 'Designing' nodes and their button */
+.tree-node-Designing .tree-node-button,
+.tree-node-Designing .tree-node-button:hover,
+.tree-node-Designing .tree-node-button:focus {
+  background-color: #e96343;
+  color: black;
+}
+
+/* Style for 'Manufacturing' nodes and their button */
+.tree-node-Manufacturing .tree-node-button,
+.tree-node-Manufacturing .tree-node-button:hover,
+.tree-node-Manufacturing .tree-node-button:focus {
+  background-color: #e8919d;
+  color: black;
+}
+
+/* Style for 'Sales/Marketing' nodes and their button */
+.tree-node-SalesMarketing .tree-node-button,
+.tree-node-SalesMarketing .tree-node-button:hover,
+.tree-node-SalesMarketing .tree-node-button:focus {
+  background-color: #a684eb;
+  color: black;
+}
+
+.arrow {
+  pointer-events: none;
+}
+
+.arrow__path {
+  stroke: #000;
+  fill: transparent;
+  stroke-dasharray: 4 2;
+}
+
+.arrow__head line {
+  stroke: #000;
+  stroke-width: 1px;
+}
