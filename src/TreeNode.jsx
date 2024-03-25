@@ -12,8 +12,10 @@ function TreeNode({ node, onClick }) {
     const [chart, setChart] = useState(null)
 
     const handleClick = () => {
-        setIsOpen(!isOpen);
-        onClick(node, !isOpen);
+        if (node.isClickable) {
+            setIsOpen(!isOpen);
+            onClick(node, !isOpen);
+        }
     };
 
     useEffect(() => {
@@ -46,7 +48,10 @@ function TreeNode({ node, onClick }) {
     }, [isPopoverOpen])
 
     const handlePopoverOpen = () => {
-        setIsPopoverOpen(true); 
+        if (node.isHoverable){
+            setIsPopoverOpen(true); 
+        }
+        
     };
 
     const handlePopoverClose = () => {
